@@ -8,6 +8,7 @@ export const Content = styled.div`
 max-width: 1120px;
 margin: 0 auto;
 padding: 2 1rem 12rem;
+height: 200px;
 display: flex;
 align-items: center;
 justify-content: space-between;
@@ -19,6 +20,7 @@ button {
     border: 0;
     padding: 0 2rem;
     border-radius: 0.25rem;
+    
 }
 &:hover {
     filter: brightness(5px);
