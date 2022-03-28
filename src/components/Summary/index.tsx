@@ -6,32 +6,66 @@ import { TransactionsContext } from '../../TransactionsContext'
 import { useContext } from "react";
 
 export function Summary() {
-    const {transactions} = useContext(TransactionsContext)
-    console.log(transactions);
-    
+    const { transactions } = useContext(TransactionsContext)
+
+    const summary = transactions.reduce((acc, transaction) => {
+        if (transaction.type === 'deposit') {
+            acc.deposits += transaction.amout;
+            acc.total += transaction.amout
+        } else {
+            acc.withdraws += transaction.amout
+            acc.total -= transaction.amout;
+        }
+        return acc;
+    }, {
+        deposits: 0,
+        withdraws: 0,
+        total: 0,
+
+    }
+
+    )
+
     return (
 
         <Container>
             <div>
                 <header>
-                    <p>Entradas</p>
+                    <p>Entadas</p>
                     <img src={incomeImg} alt="entradas" />
                 </header>
-                <strong>R$1000</strong>
+                <strong>
+                    {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(summary.deposits)}
+                </strong>
             </div>
             <div>
                 <header>
                     <p>Saidas</p>
                     <img src={outcomeImg} alt="saidas" />
                 </header>
-                <strong>R$500</strong>
+                <strong>
+                    {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(summary.withdraws)}
+
+                </strong>
             </div>
             <div className="fundo-hl">
                 <header>
                     <p>Total</p>
                     <img src={totalImg} alt="total" />
                 </header>
-                <strong>R$500</strong>
+                <strong>
+                    {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(summary.total)}
+
+                </strong>
             </div>
         </Container>
 
